@@ -21,6 +21,19 @@
                id="nome" 
                name="nome" 
                placeholder="Ex: Nubank" />
+
+          @if (form.controls.nome.hasError('required') && form.controls.nome.touched) {
+            <span class="form-hint form-hint-error">
+              O nome do cartão é obrigatório.
+            </span>
+          }
+
+          @if (form.controls.nome.hasError('apiError')) {
+            <span class="form-hint form-hint-error">
+              {{ form.get('nome')?.errors?.['apiError'] }}
+            </span>
+          }
+
       </div>
 
       <!-- Corrigido: form-group -->
@@ -34,6 +47,20 @@
           <option value="DINNER">Dinner</option>
           <option value="ELO">Elo</option>
         </select>
+
+         @if (form.controls.bandeira.hasError('required') && form.controls.bandeira.touched) {
+            <span class="form-hint form-hint-error">
+              A bandeira do cartão é obrigatória.
+            </span>
+          }
+
+          @if (form.controls.bandeira.hasError('apiError')) {
+            <span class="form-hint form-hint-error">
+              {{ form.get('bandeira')?.errors?.['apiError'] }}
+            </span>
+          }
+        
+
       </div>
 
       <div class="form-action">
