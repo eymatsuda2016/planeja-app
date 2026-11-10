@@ -5,6 +5,11 @@ import { CadastroCartao } from './cartoes/cadastro-cartao/cadastro-cartao';
 
 export const routes: Routes = [
     {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'paginas/cadastro-cartoes'
+    },
+    {
         path: 'paginas',
         component: Template,
         children: [
@@ -13,5 +18,9 @@ export const routes: Routes = [
                 component: CadastroCartao
             }
         ]
+    },
+    {
+        path: '**',
+        redirectTo: 'paginas/cadastro-cartoes'
     }
 ];

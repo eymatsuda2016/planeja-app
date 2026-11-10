@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CartaoService } from '../cartao-service';
 import { DadosCartaoForm, DetalhesCartao } from '../dados-cartao';
 import { ValidationErrorResponse } from '../../common/validation/validation-error-model';
-import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 interface CadastroCartaoForm {
   nome: FormControl<string>;
@@ -12,19 +12,18 @@ interface CadastroCartaoForm {
 
 @Component({
   selector: 'app-cadastro-cartao',
-  imports: [ReactiveFormsModule, CommonModule
-    
-  ],
+  standalone: true,
+  imports: [ReactiveFormsModule],
   templateUrl: './cadastro-cartao.html',
   styleUrl: './cadastro-cartao.scss',
 })
 export class CadastroCartao implements OnInit {
 
   form!: FormGroup<CadastroCartaoForm>;
+  service = inject(CartaoService);
+  toastr = inject(ToastrService);
   
-  // O ideal no Angular moderno é usar o inject() ou construtor, 
-  // mas mantendo a sua estrutura:
-  private service = inject(CartaoService); 
+
 
   ngOnInit(): void { 
     this.form = new FormGroup<CadastroCartaoForm>({
@@ -36,6 +35,7 @@ export class CadastroCartao implements OnInit {
   isFormInvalid(): boolean {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.toastr.error('Existem campos inválidos no formulário.', 'Erro de validação');
       return true;
     }
     return false;
@@ -52,6 +52,8 @@ export class CadastroCartao implements OnInit {
         .subscribe({
           next: (response: DetalhesCartao) => {
             console.log('Recebendo a resposta:', response);
+            this.toastr.success('Cartão cadastrado/atualizado com sucesso!', 'Sucesso');
+
           },
 
           error: (error) => this.onApiError(error)
@@ -72,7 +74,12 @@ export class CadastroCartao implements OnInit {
       private onApiError(response: any) : void{
       if(response.status===422){
         this.aplicarErrosValidacao(response.error);
+        this.toastr.error('Existem campos inválidos no formulário.', 'Erro de validação');
+
         return;
       }
+      this.toastr.error('Ocorreu um erro ao processar a solicitação.', 'Erro');
+      console.error(response.error);
+
   }
 }
