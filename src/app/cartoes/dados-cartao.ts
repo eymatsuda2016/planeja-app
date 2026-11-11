@@ -5,8 +5,8 @@ export class DadosCartaoForm{
 }
 
 export class DetalhesCartao{
-     id!: String; 
-     nome!: String;
-     bandeira!: String; 
+     id!: string; 
+     nome!: string;
+     bandeira!: string; 
      dataCadastro! : Date;  
 }
