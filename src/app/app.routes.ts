@@ -8,7 +8,7 @@ export const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'paginas/cadastro-cartoes'
+        redirectTo: 'paginas/listagem-cartoes'
     },
     {
         path: 'paginas',
@@ -24,8 +24,5 @@ export const routes: Routes = [
             }
         ]
     },
-    {
-        path: '**',
-        redirectTo: 'paginas/cadastro-cartoes'
-    }
+
 ];

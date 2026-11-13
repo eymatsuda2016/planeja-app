@@ -43,14 +43,33 @@
                     }
                 </tbody>
             </table>
-            @if (listagem.content.length === 0) {
-                <p>Nenhum cartão cadastrado.</p>
-            }
-        } @else if (erro) {
-            <p>Não foi possível carregar os cartões. Verifique se a API está disponível e tente novamente.</p>
-            <button type="button" (click)="listarCartoes()">Tentar novamente</button>
-        } @else if (carregando) {
-            <p>Carregando cartões...</p>
+          <!--Paginação-->   
+          <div class="table-footer">
+               <span> Mostrando 1 -10 de 50 Registros</span>
+
+               <div class="pagination">
+                    <button class="page-btn"
+                            [class.disable]="listagem.first"
+                            [disabled]="listagem.first"
+                            (click)="navegarAnterior(listagem)">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button> 
+                    @for (pagina of paginas(listagem.totalPages); track pagina){
+                        <button class="page-btn"
+                                [class.active]="pagina === listagem.number"
+                                (click)="navegar(pagina)">
+                            {{pagina + 1}}
+                        </button> 
+                    }  
+                    
+                    <button class="page-btn"
+                            [class.disable]="listagem.last"
+                            [disabled]="listagem.last"
+                            (click)="navegarProximo(listagem)">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>    
+          </div>
         }
         
     </div>
