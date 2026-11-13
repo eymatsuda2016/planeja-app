@@ -45,7 +45,7 @@
             </table>
           <!--Paginação-->   
           <div class="table-footer">
-               <span> Mostrando 1 -10 de 50 Registros</span>
+               <span>Mostrando {{ registroInicial(listagem) }} - {{ registroFinal(listagem) }} de {{ listagem.totalElements }} Registros</span>
 
                <div class="pagination">
                     <button class="page-btn"
