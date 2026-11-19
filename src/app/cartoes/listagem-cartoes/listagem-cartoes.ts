@@ -4,12 +4,12 @@ import { Observable, catchError, finalize, of } from 'rxjs';
 import { PageResult } from '../../common/pagination/page-result';
 import { DetalhesCartao } from '../dados-cartao';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listagem-cartoes',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './listagem-cartoes.html',
   styleUrl: './listagem-cartoes.scss',
 })

@@ -4,8 +4,9 @@ import { CartaoService } from '../cartao-service';
 import { DadosCartaoForm, DetalhesCartao } from '../dados-cartao';
 import { ValidationErrorResponse } from '../../common/validation/validation-error-model';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
+import { CommonModule } from '@angular/common';
 
 interface CadastroCartaoForm {
   nome: FormControl<string>;
@@ -15,7 +16,7 @@ interface CadastroCartaoForm {
 @Component({
   selector: 'app-cadastro-cartao',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './cadastro-cartao.html',
   styleUrl: './cadastro-cartao.scss',
 })
@@ -81,6 +82,8 @@ requisicao
               ? 'Cartão atualizado com sucesso!'
               : 'Cartão cadastrado com sucesso!';
             this.toastr.success(mensagem, 'Sucesso');
+            this.form.reset();
+            this.idCartaoParaEdicao = null;
 
           },
 
