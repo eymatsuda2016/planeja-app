@@ -5,6 +5,7 @@ import { PageResult } from '../../common/pagination/page-result';
 import { DetalhesCartao } from '../dados-cartao';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listagem-cartoes',
@@ -16,6 +17,7 @@ export class ListagemCartoes implements OnInit {
 
   service = inject(CartaoService);
   router = inject(Router);
+  toastr = inject(ToastrService);
   listagem$!: Observable<PageResult<DetalhesCartao> | null>;
   paginaAtual = 0
   tamanhoPagina = 10;
@@ -79,6 +81,19 @@ export class ListagemCartoes implements OnInit {
     this.router.navigate(['/paginas/cadastro-cartoes'], {
       queryParams: {
         id: idCartao
+      }
+    });
+  }
+
+  mudarStatus(idCartao: string) {
+    this.service.mudarStatus(idCartao)
+    .subscribe({
+      next: () => {
+        this.toastr.success('Status do cartão alterado com sucesso.');
+        this.listarCartoes();
+      },
+      error: () => {
+        this.toastr.error('Erro ao alterar status do cartão.');
       }
     });
   }

@@ -8,5 +8,6 @@ export class DetalhesCartao{
      id!: string; 
      nome!: string;
      bandeira!: string; 
-     dataCadastro! : Date;  
+     dataCadastro! : Date;
+     ativo!: boolean;  
 }
