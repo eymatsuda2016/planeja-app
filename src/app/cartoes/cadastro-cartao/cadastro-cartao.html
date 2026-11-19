@@ -11,7 +11,7 @@
 <!-- Conteúdo -->
 <main class="content">
   <div class="card">
-    <h2>Novo Cartão</h2>
+    <h2>{{ idCartaoParaEdicao ? 'Editar Cartão' : 'Novo Cartão' }}</h2>
 
     <form [formGroup]="form" (ngSubmit)="handleSubmit()" class="form">
       <!-- Corrigido: form-group -->
@@ -64,7 +64,8 @@
       </div>
 
       <div class="form-action">
-        <button type="submit" class="btn-primary">Salvar</button>
+        <button type="submit" class="btn-primary">
+          {{idCartaoParaEdicao ? 'Atualizar' : 'Salvar'}}</button>
         <button type="button" class="btn-secondary">Cancelar</button>
       </div>
     </form>
