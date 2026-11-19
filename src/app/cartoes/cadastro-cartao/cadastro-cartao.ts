@@ -5,6 +5,7 @@ import { DadosCartaoForm, DetalhesCartao } from '../dados-cartao';
 import { ValidationErrorResponse } from '../../common/validation/validation-error-model';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
 
 interface CadastroCartaoForm {
   nome: FormControl<string>;
@@ -68,12 +69,18 @@ export class CadastroCartao implements OnInit {
     }
     
     const dadosCartao = this.form.value as DadosCartaoForm;
-    this.service
-        .criar(dadosCartao)
+
+const requisicao: Observable<DetalhesCartao | void> = this.idCartaoParaEdicao ?
+       this.service.atualizar(this.idCartaoParaEdicao, dadosCartao) :
+       this.service.criar(dadosCartao);
+
+requisicao       
         .subscribe({
-          next: (response: DetalhesCartao) => {
-            console.log('Recebendo a resposta:', response);
-            this.toastr.success('Cartão cadastrado/atualizado com sucesso!', 'Sucesso');
+          next: (response) => {
+            const mensagem = this.idCartaoParaEdicao
+              ? 'Cartão atualizado com sucesso!'
+              : 'Cartão cadastrado com sucesso!';
+            this.toastr.success(mensagem, 'Sucesso');
 
           },
 
